@@ -80,10 +80,13 @@ void MainWindow::onServerMessage(const QString &msg) {
   results_->clear();
   for (auto it = obj.begin(); it != obj.end(); ++it) {
     const QString name = it.key();
-    auto *item = new QListWidgetItem("👤 " + name, results_);
+    if (name == self_)
+      continue;
+
+    auto *item = new QListWidgetItem(u8"👤 " + name, results_);
     item->setData(Qt::UserRole, name);
   }
-  results_->setVisible(true);
+  results_->setVisible(results_->count() > 0);
 }
 
 void MainWindow::onUserClicked(QListWidgetItem *item) {
